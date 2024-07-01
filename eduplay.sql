@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-05-2024 a las 02:14:58
+-- Tiempo de generación: 01-07-2024 a las 00:50:42
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -24,126 +24,79 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `contenidoeducativo`
+-- Estructura de tabla para la tabla `alumnos`
 --
 
-CREATE TABLE `contenidoeducativo` (
-  `idContenido` int(11) NOT NULL,
-  `titulo` varchar(100) DEFAULT NULL,
-  `descripcion` text DEFAULT NULL,
-  `archivo` longblob DEFAULT NULL
+CREATE TABLE `alumnos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(50) NOT NULL,
+  `puntaje_matematicas` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `alumnos`
+--
+
+INSERT INTO `alumnos` (`id`, `nombre`, `apellido`, `usuario`, `contrasena`, `puntaje_matematicas`) VALUES
+(2, 'Jorge', 'Diaz', 'JorgeDiaz', '1234', 7),
+(3, 'Mauro', 'Ledezma', 'MauLedez', '12345', 5),
+(4, 'Franco', 'Ferrari', 'FrancoFerrari', '12345', 2);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `juego`
+-- Estructura de tabla para la tabla `docentes`
 --
 
-CREATE TABLE `juego` (
-  `idJuego` int(11) NOT NULL,
-  `nombre` varchar(100) DEFAULT NULL,
-  `categoria` varchar(50) DEFAULT NULL,
-  `nivelDificultad` int(11) DEFAULT NULL
+CREATE TABLE `docentes` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contrasena` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `progreso`
+-- Volcado de datos para la tabla `docentes`
 --
 
-CREATE TABLE `progreso` (
-  `idProgreso` int(11) NOT NULL,
-  `idUsuario` int(11) DEFAULT NULL,
-  `idJuego` int(11) DEFAULT NULL,
-  `puntaje` int(11) DEFAULT NULL,
-  `tiempo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuario`
---
-
-CREATE TABLE `usuario` (
-  `idUsuario` int(11) NOT NULL,
-  `nombre` varchar(50) DEFAULT NULL,
-  `apellido` varchar(50) DEFAULT NULL,
-  `edad` int(11) DEFAULT NULL,
-  `nombreUsuario` varchar(50) DEFAULT NULL,
-  `contraseña` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `docentes` (`id`, `usuario`, `contrasena`) VALUES
+(1, 'docente1', 'contrasena123');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `contenidoeducativo`
+-- Indices de la tabla `alumnos`
 --
-ALTER TABLE `contenidoeducativo`
-  ADD PRIMARY KEY (`idContenido`);
+ALTER TABLE `alumnos`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`);
 
 --
--- Indices de la tabla `juego`
+-- Indices de la tabla `docentes`
 --
-ALTER TABLE `juego`
-  ADD PRIMARY KEY (`idJuego`);
-
---
--- Indices de la tabla `progreso`
---
-ALTER TABLE `progreso`
-  ADD PRIMARY KEY (`idProgreso`),
-  ADD KEY `idUsuario` (`idUsuario`),
-  ADD KEY `idJuego` (`idJuego`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`idUsuario`);
+ALTER TABLE `docentes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `contenidoeducativo`
+-- AUTO_INCREMENT de la tabla `alumnos`
 --
-ALTER TABLE `contenidoeducativo`
-  MODIFY `idContenido` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `alumnos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `juego`
+-- AUTO_INCREMENT de la tabla `docentes`
 --
-ALTER TABLE `juego`
-  MODIFY `idJuego` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `progreso`
---
-ALTER TABLE `progreso`
-  MODIFY `idProgreso` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `progreso`
---
-ALTER TABLE `progreso`
-  ADD CONSTRAINT `progreso_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `progreso_ibfk_2` FOREIGN KEY (`idJuego`) REFERENCES `juego` (`idJuego`);
+ALTER TABLE `docentes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
